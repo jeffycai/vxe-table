@@ -4,7 +4,7 @@
 
     <vxe-table
       :show-header="false"
-      :data="tableData">
+      :data="demo1.tableData">
       <vxe-table-column type="seq" width="60"></vxe-table-column>
       <vxe-table-column field="name" title="Name"></vxe-table-column>
       <vxe-table-column field="sex" title="Sex"></vxe-table-column>
@@ -15,22 +15,22 @@
     <p class="demo-code">{{ $t('app.body.button.showCode') }}</p>
 
     <pre>
-      <code class="xml">{{ demoCodes[0] }}</code>
-      <code class="javascript">{{ demoCodes[1] }}</code>
+      <pre-code class="xml">{{ demoCodes[0] }}</pre-code>
+      <pre-code class="javascript">{{ demoCodes[1] }}</pre-code>
     </pre>
 
     <p class="tip">当纵向或横向内容过多时，自动出现滚动条</p>
 
     <vxe-toolbar>
-      <template v-slot:buttons>
-        <vxe-button @click="showHeader = !showHeader">显示/隐藏表头</vxe-button>
+      <template #buttons>
+        <vxe-button @click="demo2.showHeader = !demo2.showHeader">显示/隐藏表头</vxe-button>
       </template>
     </vxe-toolbar>
 
     <vxe-table
-      height="400"
-      :show-header="showHeader"
-      :data="tableData2">
+      height="300"
+      :show-header="demo2.showHeader"
+      :data="demo2.tableData2">
       <vxe-table-column type="seq" width="60"></vxe-table-column>
       <vxe-table-column field="name" title="Name"></vxe-table-column>
       <vxe-table-column field="sex" title="Sex"></vxe-table-column>
@@ -41,25 +41,52 @@
     <p class="demo-code">{{ $t('app.body.button.showCode') }}</p>
 
     <pre>
-      <code class="xml">{{ demoCodes[2] }}</code>
-      <code class="javascript">{{ demoCodes[3] }}</code>
+      <pre-code class="xml">{{ demoCodes[2] }}</pre-code>
+      <pre-code class="javascript">{{ demoCodes[3] }}</pre-code>
     </pre>
   </div>
 </template>
 
-<script>
-import hljs from 'highlight.js'
+<script lang="ts">
+import { defineComponent, reactive } from 'vue'
 
-export default {
-  data () {
-    return {
+export default defineComponent({
+  setup () {
+    const demo1 = reactive({
+      tableData: [
+        { id: 10001, name: 'Test1', role: 'Develop', sex: 'Man', age: 28, address: 'vxe-table 从入门到放弃' },
+        { id: 10002, name: 'Test2', role: 'Test', sex: 'Women', age: 22, address: 'Guangzhou' },
+        { id: 10003, name: 'Test3', role: 'PM', sex: 'Man', age: 32, address: 'Shanghai' },
+        { id: 10004, name: 'Test4', role: 'Designer', sex: 'Women ', age: 23, address: 'vxe-table 从入门到放弃' },
+        { id: 10005, name: 'Test5', role: 'Develop', sex: 'Women ', age: 30, address: 'Shanghai' },
+        { id: 10006, name: 'Test6', role: 'Designer', sex: 'Women ', age: 21, address: 'vxe-table 从入门到放弃' },
+        { id: 10007, name: 'Test7', role: 'Test', sex: 'Man ', age: 29, address: 'vxe-table 从入门到放弃' },
+        { id: 10008, name: 'Test8', role: 'Develop', sex: 'Man ', age: 35, address: 'vxe-table 从入门到放弃' }
+      ]
+    })
+
+    const demo2 = reactive({
       showHeader: false,
-      tableData: [],
+      tableData2: [
+        { id: 10001, name: 'Test1', role: 'Develop', sex: 'Man', age: 28, address: 'vxe-table 从入门到放弃' },
+        { id: 10002, name: 'Test2', role: 'Test', sex: 'Women', age: 22, address: 'Guangzhou' },
+        { id: 10003, name: 'Test3', role: 'PM', sex: 'Man', age: 32, address: 'Shanghai' },
+        { id: 10004, name: 'Test4', role: 'Designer', sex: 'Women ', age: 23, address: 'vxe-table 从入门到放弃' },
+        { id: 10005, name: 'Test5', role: 'Develop', sex: 'Women ', age: 30, address: 'Shanghai' },
+        { id: 10006, name: 'Test6', role: 'Designer', sex: 'Women ', age: 21, address: 'vxe-table 从入门到放弃' },
+        { id: 10007, name: 'Test7', role: 'Test', sex: 'Man ', age: 29, address: 'vxe-table 从入门到放弃' },
+        { id: 10008, name: 'Test8', role: 'Develop', sex: 'Man ', age: 35, address: 'vxe-table 从入门到放弃' }
+      ]
+    })
+
+    return {
+      demo1,
+      demo2,
       demoCodes: [
         `
         <vxe-table
           :show-header="false"
-          :data="tableData">
+          :data="demo1.tableData">
           <vxe-table-column type="seq" width="60"></vxe-table-column>
           <vxe-table-column field="name" title="Name"></vxe-table-column>
           <vxe-table-column field="sex" title="Sex"></vxe-table-column>
@@ -68,28 +95,40 @@ export default {
         </vxe-table>
         `,
         `
-        export default {
-          data () {
+        import { defineComponent, reactive } from 'vue'
+
+        export default defineComponent({
+          setup () {
+            const demo1 = reactive({
+              tableData: [
+                { id: 10001, name: 'Test1', role: 'Develop', sex: 'Man', age: 28, address: 'vxe-table 从入门到放弃' },
+                { id: 10002, name: 'Test2', role: 'Test', sex: 'Women', age: 22, address: 'Guangzhou' },
+                { id: 10003, name: 'Test3', role: 'PM', sex: 'Man', age: 32, address: 'Shanghai' },
+                { id: 10004, name: 'Test4', role: 'Designer', sex: 'Women ', age: 23, address: 'vxe-table 从入门到放弃' },
+                { id: 10005, name: 'Test5', role: 'Develop', sex: 'Women ', age: 30, address: 'Shanghai' },
+                { id: 10006, name: 'Test6', role: 'Designer', sex: 'Women ', age: 21, address: 'vxe-table 从入门到放弃' },
+                { id: 10007, name: 'Test7', role: 'Test', sex: 'Man ', age: 29, address: 'vxe-table 从入门到放弃' },
+                { id: 10008, name: 'Test8', role: 'Develop', sex: 'Man ', age: 35, address: 'vxe-table 从入门到放弃' }
+              ]
+            })
+
             return {
-              tableData: []
+              demo1
             }
-          },
-          created () {
-            this.tableData = window.MOCK_DATA_LIST.slice(0, 6)
           }
-        }
+        })
         `,
         `
         <vxe-toolbar>
-          <template v-slot:buttons>
-            <vxe-button @click="showHeader = !showHeader">显示/隐藏表头</vxe-button>
+          <template #buttons>
+            <vxe-button @click="demo2.showHeader = !demo2.showHeader">显示/隐藏表头</vxe-button>
           </template>
         </vxe-toolbar>
 
         <vxe-table
-          height="400"
-          :show-header="showHeader"
-          :data="tableData2">
+          height="300"
+          :show-header="demo2.showHeader"
+          :data="demo2.tableData2">
           <vxe-table-column type="seq" width="60"></vxe-table-column>
           <vxe-table-column field="name" title="Name"></vxe-table-column>
           <vxe-table-column field="sex" title="Sex"></vxe-table-column>
@@ -98,29 +137,32 @@ export default {
         </vxe-table>
         `,
         `
-        export default {
-          data () {
+        import { defineComponent, reactive } from 'vue'
+
+        export default defineComponent({
+          setup () {
+            const demo2 = reactive({
+              showHeader: false,
+              tableData2: [
+                { id: 10001, name: 'Test1', role: 'Develop', sex: 'Man', age: 28, address: 'vxe-table 从入门到放弃' },
+                { id: 10002, name: 'Test2', role: 'Test', sex: 'Women', age: 22, address: 'Guangzhou' },
+                { id: 10003, name: 'Test3', role: 'PM', sex: 'Man', age: 32, address: 'Shanghai' },
+                { id: 10004, name: 'Test4', role: 'Designer', sex: 'Women ', age: 23, address: 'vxe-table 从入门到放弃' },
+                { id: 10005, name: 'Test5', role: 'Develop', sex: 'Women ', age: 30, address: 'Shanghai' },
+                { id: 10006, name: 'Test6', role: 'Designer', sex: 'Women ', age: 21, address: 'vxe-table 从入门到放弃' },
+                { id: 10007, name: 'Test7', role: 'Test', sex: 'Man ', age: 29, address: 'vxe-table 从入门到放弃' },
+                { id: 10008, name: 'Test8', role: 'Develop', sex: 'Man ', age: 35, address: 'vxe-table 从入门到放弃' }
+              ]
+            })
+
             return {
-              showHeader: true,
-              tableData2: []
+              demo2
             }
-          },
-          created () {
-            this.tableData2 = window.MOCK_DATA_LIST.slice(0, 50)
           }
-        }
+        })
         `
       ]
     }
-  },
-  created () {
-    this.tableData = window.MOCK_DATA_LIST.slice(0, 6)
-    this.tableData2 = window.MOCK_DATA_LIST.slice(0, 50)
-  },
-  mounted () {
-    Array.from(this.$el.querySelectorAll('pre code')).forEach((block) => {
-      hljs.highlightBlock(block)
-    })
   }
-}
+})
 </script>

@@ -6,6 +6,7 @@
   position: fixed;
   top: 0;
   left: 0;
+  line-height: 1.5;
   width: calc(100% + 18px);
   height: calc(100% + 18px);
   color: $vxe-font-color;
@@ -135,9 +136,9 @@
     .vxe-modal--box {
       display: flex;
       flex-direction: column;
-      position: absolute;
+      position: fixed;
       left: 50%;
-      top: 15vh;
+      top: 0;
       box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
       border: 1px solid rgba(0,0,0,.2);
       .vxe-modal--header {
@@ -270,7 +271,7 @@
   .vxe-modal--footer {
     flex-shrink: 0;
     text-align: right;
-    padding: 0.6em 1em;
+    padding: 0.8em 1em;
   }
   &.is--maximize {
     .vxe-modal--box {

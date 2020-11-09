@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>{{ $t('app.aside.nav.icon') }}</h2>
-    <p class="tip">内置轻量级的 icon 图标，可以通过 <router-link class="link" :to="{name: 'StartIcons'}">setup</router-link> 替换默认的图标，例如第三方图标库：<a class="link" href="https://github.com/FortAwesome/Font-Awesome" target="_blank">font-awesome</a></p>
+    <p class="tip">内置轻量级的 css 图标，可以通过 <router-link class="link" :to="{name: 'StartIcons'}">setup</router-link> 替换为 font 图标，例如第三方图标库：font-awesome、inconfont</p>
 
     <ul class="vxe-row icon-list" title="点击复制内容">
       <li class="vxe-col--4" v-for="item in list" :key="item.icon" @click="copyEvent(item)">
@@ -13,17 +13,27 @@
     <p class="demo-code">{{ $t('app.body.button.showCode') }}</p>
 
     <pre>
-      <code class="xml">{{ demoCodes[0] }}</code>
+      <pre-code class="xml">{{ demoCodes[0] }}</pre-code>
     </pre>
   </div>
 </template>
 
-<script>
-import hljs from 'highlight.js'
+<script lang="ts">
+import { defineComponent } from 'vue'
+import { ModalController } from '../../../packages/vxe-table'
 import XEClipboard from 'xe-clipboard'
 
-export default {
-  data () {
+interface ItemVO {
+  icon: string;
+}
+
+export default defineComponent({
+  setup () {
+    const copyEvent = ({ icon }: ItemVO) => {
+      if (XEClipboard.copy(icon)) {
+        ModalController.message({ message: '已复制到剪贴板！', status: 'success' })
+      }
+    }
     return {
       list: [
         {
@@ -64,6 +74,9 @@ export default {
         },
         {
           icon: 'vxe-icon--more'
+        },
+        {
+          icon: 'vxe-icon--check'
         },
         {
           icon: 'vxe-icon--close'
@@ -134,27 +147,16 @@ export default {
         {
           icon: 'vxe-icon--search'
         }
-      ],
+      ] as ItemVO[],
+      copyEvent,
       demoCodes: [
         `
         <i class="vxe-icon--caret-top"></i>
         `
       ]
     }
-  },
-  mounted () {
-    Array.from(this.$el.querySelectorAll('pre code')).forEach((block) => {
-      hljs.highlightBlock(block)
-    })
-  },
-  methods: {
-    copyEvent ({ icon }) {
-      if (XEClipboard.copy(icon)) {
-        this.$XModal.message({ message: '已复制到剪贴板！', status: 'success' })
-      }
-    }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
@@ -165,6 +167,7 @@ export default {
   border-left: 1px solid #eee;
   overflow: hidden;
   margin: 0;
+  padding: 0;
   &:after {
     content: "";
     clear: both;

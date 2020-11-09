@@ -1,14 +1,14 @@
 <template>
   <div>
     <p class="tip">
-      固定列，通过设置 <table-column-api-link prop="fixed"/>=left 参数<br>
+      固定列，通过设置 <table-column-api-link prop="fixed"/>=left|right 来启用固定列<br>
       当横向内容过多时，将列固定在左右两侧
     </p>
 
     <vxe-table
       border="inner"
       show-overflow
-      :data="tableData">
+      :data="demo1.tableData">
       <vxe-table-column type="seq" width="60" fixed="left"></vxe-table-column>
       <vxe-table-column field="name" title="Name" width="300"></vxe-table-column>
       <vxe-table-column field="role" title="Role" width="300"></vxe-table-column>
@@ -20,8 +20,8 @@
     <p class="demo-code">{{ $t('app.body.button.showCode') }}</p>
 
     <pre>
-      <code class="xml">{{ demoCodes[0] }}</code>
-      <code class="javascript">{{ demoCodes[1] }}</code>
+      <pre-code class="xml">{{ demoCodes[0] }}</pre-code>
+      <pre-code class="javascript">{{ demoCodes[1] }}</pre-code>
     </pre>
 
     <p class="tip">如果列宽足够的情况下，固定列不会浮动</p>
@@ -29,7 +29,7 @@
     <vxe-table
       border
       show-overflow
-      :data="tableData">
+      :data="demo2.tableData">
       <vxe-table-column type="seq" width="60" fixed="left"></vxe-table-column>
       <vxe-table-column field="name" title="Name"></vxe-table-column>
       <vxe-table-column field="role" title="Role"></vxe-table-column>
@@ -41,25 +41,42 @@
     <p class="demo-code">{{ $t('app.body.button.showCode') }}</p>
 
     <pre>
-      <code class="xml">{{ demoCodes[2] }}</code>
-      <code class="javascript">{{ demoCodes[3] }}</code>
+      <pre-code class="xml">{{ demoCodes[2] }}</pre-code>
+      <pre-code class="javascript">{{ demoCodes[3] }}</pre-code>
     </pre>
   </div>
 </template>
 
-<script>
-import hljs from 'highlight.js'
+<script lang="ts">
+import { defineComponent, reactive } from 'vue'
 
-export default {
-  data () {
+export default defineComponent({
+  setup () {
+    const demo1 = reactive({
+      tableData: [
+        { id: 10001, name: 'Test1', role: 'Develop', sex: 'Man', age: 28, address: 'vxe-table 从入门到放弃' },
+        { id: 10002, name: 'Test2', role: 'Test', sex: 'Women', age: 22, address: 'Guangzhou' },
+        { id: 10003, name: 'Test3', role: 'PM', sex: 'Man', age: 32, address: 'Shanghai' },
+        { id: 10004, name: 'Test4', role: 'Designer', sex: 'Women ', age: 24, address: 'Shanghai' }
+      ]
+    })
+    const demo2 = reactive({
+      tableData: [
+        { id: 10001, name: 'Test1', role: 'Develop', sex: 'Man', age: 28, address: 'vxe-table 从入门到放弃' },
+        { id: 10002, name: 'Test2', role: 'Test', sex: 'Women', age: 22, address: 'Guangzhou' },
+        { id: 10003, name: 'Test3', role: 'PM', sex: 'Man', age: 32, address: 'Shanghai' },
+        { id: 10004, name: 'Test4', role: 'Designer', sex: 'Women ', age: 24, address: 'Shanghai' }
+      ]
+    })
     return {
-      tableData: [],
+      demo1,
+      demo2,
       demoCodes: [
         `
         <vxe-table
           border="inner"
           show-overflow
-          :data="tableData">
+          :data="demo1.tableData">
           <vxe-table-column type="seq" width="60" fixed="left"></vxe-table-column>
           <vxe-table-column field="name" title="Name" width="300"></vxe-table-column>
           <vxe-table-column field="role" title="Role" width="300"></vxe-table-column>
@@ -69,22 +86,29 @@ export default {
         </vxe-table>
         `,
         `
-        export default {
-          data () {
+        import { defineComponent, reactive } from 'vue'
+
+        export default defineComponent({
+          setup () {
+            const demo1 = reactive({
+              tableData: [
+                { id: 10001, name: 'Test1', role: 'Develop', sex: 'Man', age: 28, address: 'vxe-table 从入门到放弃' },
+                { id: 10002, name: 'Test2', role: 'Test', sex: 'Women', age: 22, address: 'Guangzhou' },
+                { id: 10003, name: 'Test3', role: 'PM', sex: 'Man', age: 32, address: 'Shanghai' },
+                { id: 10004, name: 'Test4', role: 'Designer', sex: 'Women ', age: 24, address: 'Shanghai' }
+              ]
+            })
             return {
-              tableData: []
+              demo1
             }
-          },
-          created () {
-            this.tableData = window.MOCK_DATA_LIST.slice(0, 4)
           }
-        }
+        })
         `,
         `
         <vxe-table
           border
           show-overflow
-          :data="tableData">
+          :data="demo2.tableData">
           <vxe-table-column type="seq" width="60" fixed="left"></vxe-table-column>
           <vxe-table-column field="name" title="Name"></vxe-table-column>
           <vxe-table-column field="role" title="Role"></vxe-table-column>
@@ -94,27 +118,26 @@ export default {
         </vxe-table>
         `,
         `
-        export default {
-          data () {
+        import { defineComponent, reactive } from 'vue'
+
+        export default defineComponent({
+          setup () {
+            const demo1 = reactive({
+              tableData: [
+                { id: 10001, name: 'Test1', role: 'Develop', sex: 'Man', age: 28, address: 'vxe-table 从入门到放弃' },
+                { id: 10002, name: 'Test2', role: 'Test', sex: 'Women', age: 22, address: 'Guangzhou' },
+                { id: 10003, name: 'Test3', role: 'PM', sex: 'Man', age: 32, address: 'Shanghai' },
+                { id: 10004, name: 'Test4', role: 'Designer', sex: 'Women ', age: 24, address: 'Shanghai' }
+              ]
+            })
             return {
-              tableData: []
+              demo2
             }
-          },
-          created () {
-            this.tableData = window.MOCK_DATA_LIST.slice(0, 4)
           }
-        }
+        })
         `
       ]
     }
-  },
-  created () {
-    this.tableData = window.MOCK_DATA_LIST.slice(0, 4)
-  },
-  mounted () {
-    Array.from(this.$el.querySelectorAll('pre code')).forEach((block) => {
-      hljs.highlightBlock(block)
-    })
   }
-}
+})
 </script>
